@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      class Animal {
+        constructor(order) {
+          this.order = order;
+          this.age = 0;
+        }
+        ageUp() {
+          this.age++;
+        }
+      }
+
+      class Bear extends Animal {
+        constructor() {
+          super("Carnivora");
+          this.lives = 2;
+        }
+        move(didEat) {
+          if (didEat) {
+            if (this.lives <= 5) {
+              this.lives++;
+            }
+          } else {
+            this.lives -= 1;
+          }
+        }
+        isDead() {
+          return this.age > 20;
+        }
+        ageUp() {
+          super.ageUp();
+          if (this.age % 3 === 0) {
+            return new Bear();
+          }
+        }
+      }
+
+      class Fish extends Animal {
+        constructor() {
+          super("Siluriformes");
+        }
+        isDead() {
+          return this.age > 5;
+        }
+        ageUp() {
+          super.ageUp();
+          return new Fish();
+        }
+      }
+
+      class Ecosystem {
+        constructor(length, fish_p, bear_p) {
+          this.river = [];
+          for (let i = 0; i < length; i++) {
+            const r = Math.random();
+            if (r < bear_p) {
+              this.river.push(new Bear());
+            } else if (r > 1 - fish_p) {
+              this.river.push(new Fish());
+            } else {
+              this.river.push(undefined);
+            }
+          }
+        }
+
+        nextTimePoint() {
+          const newAnimals = [];
+
+          console.log(
+            "Bear number: " +
+              this.river.filter((el) => el instanceof Bear).length
+          );
+          console.log(
+            "Fish number: " +
+              this.river.filter((el) => el instanceof Fish).length
+          );
+
+          for (let i = 0; i < this.river.length; i++) {
+            if (this.river[i]) {
+              const newAnimal = this.river[i].ageUp();
+              if (newAnimal) {
+                newAnimals.push(newAnimal);
+              }
+              if (this.river[i].isDead()) {
+                this.river[i] = undefined;
+                continue;
+              }
+
+              const r = Math.random();
+              let dir = 0;
+              if (r < 0.4) {
+                dir = -1;
+              } else if (r > 0.6) {
+                dir = 1;
+              }
+              if (dir === 0 || i + dir < 0 || i + dir >= this.river.length) {
+                continue;
+              }
+
+              if (this.river[i + dir] === undefined) {
+                if (this.river[i] instanceof Bear) {
+                  this.river[i].move(false);
+                }
+                if (this.river[i].lives <= 0) {
+                  this.river[i] = undefined;
+                }
+                this.river[i + dir] = this.river[i];
+                this.river[i] = undefined;
+                if (dir === 1) i++;
+              } else {
+                if (
+                  this.river[i] instanceof Bear &&
+                  this.river[i + dir] instanceof Bear
+                ) {
+                  this.river[i].move(false);
+                  this.river[i + dir].move(false);
+                  if (this.river[i].lives <= 0) {
+                    this.river[i] = undefined;
+                  }
+                  if (this.river[i + dir].lives <= 0) {
+                    this.river[i + dir] = undefined;
+                  }
+                } else if (
+                  this.river[i].order === "Carnivora" &&
+                  this.river[i + dir].order !== "Carnivora"
+                ) {
+                  this.river[i].move(true);
+                  this.river[i + dir] = this.river[i];
+                  this.river[i] = undefined;
+                  if (dir === 1) i++;
+                } else if (
+                  this.river[i].order !== "Carnivora" &&
+                  this.river[i + dir].order === "Carnivora"
+                ) {
+                  this.river[i + dir].move(true);
+                  this.river[i] = undefined;
+                }
+              }
+            }
+          }
+
+          newAnimals.forEach((animal) => {
+            while (this.river.filter((el) => el).length < this.river.length) {
+              let index = Math.floor(Math.random() * this.river.length);
+              if (!this.river[index]) {
+                this.river[index] = animal;
+                break;
+              }
+            }
+          });
+        }
+
+        printRiver() {
+          console.log(this.river);
+        }
+      }
+
+      const e = new Ecosystem(1000, 0.7, 0.2);
+      setInterval(() => {
+        e.nextTimePoint();
+      }, 1000);
+    </script>
+  </body>
+</html>

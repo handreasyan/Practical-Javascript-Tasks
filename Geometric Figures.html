@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      
+      // Diamond 			===========================================================
+      function stars(num) {
+        let str = "";
+        for (let i = 0; i < num; i++) {
+          str += "*";
+        }
+        return str;
+      }
+      function spaces(num) {
+        let str = "";
+        for (let i = 0; i < num; i++) {
+          str += " ";
+        }
+        return str;
+      }
+      function diamond(line) {
+        if (line % 2 === 1) {
+          let str = "";
+          let topSpaces = line / 2 - 1;
+          for (let i = 1; i <= line; i += 2) {
+            str += spaces(topSpaces) + stars(i) + "\n";
+            topSpaces--;
+          }
+          let bottomSpaces = 1;
+          for (let x = line - 2; x > 0; x -= 2) {
+            str += spaces(bottomSpaces) + stars(x) + "\n";
+            bottomSpaces++;
+          }
+
+          return str;
+        } else {
+          alert("Not walid Nubmber");
+        }
+      }
+      console.log(diamond(5));
+
+      // Tryangle	===========================================================
+      function triangle(num) {
+        let result = "";
+        let x = num - 1;
+
+        function draw(n) {
+          if (n > num) {
+            return 1 + "\n";
+          }
+          for (let i = n; i > 0; i--) {
+            result += "#";
+          }
+          result += "\n";
+          draw(n + 1);
+        }
+        draw(num - x);
+
+        return result;
+      }
+
+      console.log(triangle(7));
+
+      // version 2 
+	      for (let line = "#"; line.length < 7; line += "#") {
+	        console.log(line);
+	      }
+
+
+      // Chessmate Board		===================================================================================================
+
+      function chess(n) {
+        let x = 2;
+        let res = "";
+
+        for (let j = 0; j < n; j++) {
+          for (let i = 0; i < n; i++) {
+            if (x % 2 === 0) {
+              res += "#";
+            } else {
+              res += " ";
+            }
+            x++;
+          }
+          x++;
+          res += "\n";
+        }
+        return res;
+      }
+
+      console.log(chess(8));
+    </script>
+  </body>
+</html>

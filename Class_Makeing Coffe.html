@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      class Beverage {
+        constructor(cost) {
+          this._cost = cost;
+        }
+        getCost() {
+          return this._cost;
+        }
+      }
+
+      class Espresso extends Beverage {
+        constructor() {
+          super(5);
+        }
+      }
+
+      class Decaf extends Beverage {
+        constructor() {
+          super(6);
+        }
+      }
+
+      class Tea extends Beverage {
+        constructor() {
+          super(3);
+        }
+      }
+
+      class AddOnDeacorator extends Beverage {
+        constructor(beverage, cost) {
+          super(cost);
+          this._cost = cost;
+          this._beverage = beverage;
+        }
+        getCost() {
+          return this._cost + this._beverage.getCost();
+        }
+      }
+
+      class Caramel extends AddOnDeacorator {
+        constructor(bevarage) {
+          super(bevarage, 2);
+        }
+      }
+      class Chocolate extends AddOnDeacorator {
+        constructor(bevarage) {
+          super(bevarage, 1);
+        }
+      }
+      class Milk extends AddOnDeacorator {
+        constructor(bevarage) {
+          super(bevarage, 3);
+        }
+      }
+
+      let drink1 = new Caramel(new Espresso());
+      alert(drink1.getCost());
+
+      let drink2 = new Chocolate(new Caramel(new Tea()));
+      alert(drink2.getCost());
+    </script>
+  </body>
+</html>

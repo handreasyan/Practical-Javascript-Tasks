@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/* 
+			[								[	
+			 [1,2,3],					 [7,4,1],
+			 [4,5,6],			=>		 [8,5,2],		
+			 [7,8,9]						 [8,5,2],	
+			]								]		 	
+		*/
+		const kenter = [
+			{"0":"0"},
+			{"0":"2"},
+			{"2":"2"},
+			{"2":"0"}
+		]
+		const zuyger = [
+			{"0":"1"},
+			{"1":"2"},
+			{"2":"1"},
+			{"1":"0"},
+		]
+
+		function rotate(arr,count){
+			count = ((count % 360) + 360) % 360 
+			let num = 90;
+			for(let i = 0; i < count / num ; i++){
+				function shuf(symb){
+					let arr2 = [];
+					for(let i=0; i< symb.length; i++){
+						const keys = Object.keys(symb[i]);
+		 				const values = Object.values(symb[i]);
+		 				const key = keys[0];
+		 				const val = values[0];
+
+		 				arr2.push(arr[key][val])
+					}
+					for(let j = 0; j<1; j++){
+						arr2.unshift(arr2.pop());
+					}
+					for(let i=0; i< symb.length; i++){
+						const keys = Object.keys(symb[i]);
+		 				const values = Object.values(symb[i]);
+		 				const key = keys[0];
+		 				const val = values[0];
+
+		 				arr[key][val] = arr2[i]
+					}
+				}
+				shuf(kenter)
+				shuf(zuyger)
+			}
+ 			console.log(arr)
+		}
+		const matrix = [
+			[1,2,3],
+			[4,5,6],			
+			[7,8,9]
+		]
+		rotate(matrix,-90);
+
+	</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

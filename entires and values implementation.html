@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      // entries()	1	=========================================================
+      Object.prototype.entriesNew = function (obj) {
+        let newBigObj = [];
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            let newarr = [];
+            newarr.push(key);
+            newarr.push(obj[key]);
+            newBigObj.push(newarr);
+          }
+        }
+        return newBigObj;
+      };
+      console.log(Object.entriesNew({ first: 1, second: 2 }));
+
+      // entries()	2	=========================================================
+      function toArray(obj) {
+        let keys = Object.keys(obj);
+        let vals = Object.values(obj);
+
+        return vals.map(function (val, ind) {
+          return [val, keys[ind]];
+        });
+      }
+      console.log(toArray({ shrimp: 15, tots: 12 }));
+
+      //	values() 		=========================================================
+      Object.prototype.valuesNew = function (objs) {
+        let arr = [];
+        for (let val in objs) {
+          if (objs.hasOwnProperty(val)) {
+            arr.push(objs[val]);
+          }
+        }
+        return arr;
+      };
+
+      console.log(Object.valuesNew({ a: 1, b: 2 })); // ➞ [1, 2]
+    </script>
+  </body>
+</html>

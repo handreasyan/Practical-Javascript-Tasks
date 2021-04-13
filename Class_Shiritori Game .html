@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      class Shiritori {
+        constructor() {
+          this.words = [];
+          this.gameOver = false;
+        }
+        play(str) {
+          if (!this.gameOver) {
+            if (this.words.length === 0) {
+              this.words.push(str);
+              return this.words;
+            } else {
+              let lastInd = this.words[this.words.length - 1];
+              let word = lastInd[lastInd.length - 1];
+              let word2 = str.split("")[0];
+
+              if (!this.words.includes(str)) {
+                if (word !== word2) {
+                  this.gameOver = true;
+                  this.restart();
+                  return "gameOver";
+                } else {
+                  this.words.push(str);
+                }
+              } else {
+                this.gameOver = true;
+                this.restart();
+                return "Words should be accessible";
+              }
+              return this.words;
+            }
+          }
+        }
+        restart() {
+          this.words = [];
+          this.gameOver = false;
+          return "game restarted ";
+        }
+      }
+
+      const myShiritori = new Shiritori();
+
+      console.log(myShiritori.play("apple"));
+      console.log(myShiritori.play("ear"));
+      console.log(myShiritori.play("rhino"));
+      console.log(myShiritori.play("ocelot"));
+      console.log(myShiritori.play("tate"));
+      console.log(myShiritori.play("ear"));
+      console.log(myShiritori.play("apple"));
+      console.log(myShiritori.play("ear"));
+      console.log(myShiritori.restart());
+      console.log(myShiritori.play("apple"));
+      console.log(myShiritori.play("ear"));
+    </script>
+  </body>
+</html>

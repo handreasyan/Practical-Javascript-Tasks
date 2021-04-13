@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script>
+    
+
+      /*  Օգտագործեք search ֆունկցիան ՝ ստեղծելու համար find ֆունկցիա, որը որպես արգումենտ ստանում է զանգված բաղկացած օբյեկտներից, եւ փնտրվող տեքստը որպես երկրորդ արգումենտ։ Ֆունկցիան պետք է վերադարձնի զանգված, որը կպարունակի բոլոր այն օբյեկտները որոնց մեջ առկա է փնտրվող տեքստը որպես արժեք։ Ենթադրեք որ արգումենտում ստացած զանգվածի օբյեկտները չունեն ներկառուցված(nested) օբյեկտներ կամ զանգվածներ։*/
+
+      function find(arr, searchText) {
+        return arr.filter(function (obj) {
+          const values = Object.values(obj);
+          for (let i = 0; i < values.length; i++) {
+            if (("" + values[i]).search(searchText) !== -1) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+      console.log(JSON.stringify(find([
+									              { name: "Apple", color: "red" },
+									              { name: "Banana", color: "yellow" },
+									              { name: "Orange", color: "orange" },
+									              { name: "Apple", color: "yellow" },
+									            ],"yellow" ),undefined, 2 ) );
+
+
+      /*   Ստեղծել ֆունկցիա magic անունով, որն ընդունում է արգումենտ որպես օբյեկտ, և վերադարձնում նոր օբյեկտ, որտեղ բանալիները(keys) կդառնան արժեքներ(values), իսկ արժեքնեը(values) բանալիներ(keys)։*/
+      function magic(obj) {
+        return Object.keys(obj).reduce(function (aggr, key) {
+          aggr[obj[key]] = key;
+          return aggr;
+        }, {});
+      }
+      console.log( JSON.stringify( magic({firstName: "Michael", lastName: "Jackson", }),undefined,2));
+
+
+     // Anagramm =============================================================================================================================
+      function anagramm(str1, str2) {
+        let newStr1 = str1.replace(/[^\w]/g).toLowerCase();
+        let newStr2 = str2.replace(/[^\w]/g).toLowerCase();
+        const obj = {};
+        for (let i = 0; i < newStr1.length; i++) {
+          obj[newStr1[i] + i] = i;
+        }
+        for (let key in obj) {
+          if (newStr2.includes(key[0])) {
+            delete obj[key];
+            let replacedStr = newStr2.replace(key[0], "1");
+            newStr2 = replacedStr;
+          }
+        }
+        if (Object.keys(obj).length > 0) {
+          console.log("anagramm function result ==> " + false);
+        } else {
+          console.log("anagramm function result ==> " + true);
+        }
+      }
+      anagramm("finder", "friend");
+
+      //  harkavora mer zangvaci amen objecti mej dnel mi item anunov zangvac vori mej klcven en objectnere voronc parentId_in nuynna inj et objecti id_in
+      const foo = [
+        {
+          id: "12",
+          parentId: "0",
+          student: "",
+        },
+        {
+          id: "724",
+          parentId: "12",
+          cv: "https://firebasestorage.googleapis.com",
+        },
+        {
+          id: "466",
+          parentId: "12",
+          grand: "",
+        },
+        {
+          id: "723",
+          parentId: "466",
+          nat: "87",
+        },
+        {
+          id: "359",
+          parentId: "466",
+          asd: "87",
+        },
+        {
+          id: "649",
+          parentId: "466",
+          edqd: "",
+        },
+        {
+          id: "688",
+          parentId: "649",
+          z: "z",
+        },
+        {
+          id: "556",
+          parentId: "649",
+          d: "q",
+        },
+        {
+          id: "622",
+          parentId: "12",
+          hobbies: ["asd", ".r", "q", ""],
+        },
+        {
+          id: "235",
+          parentId: "12",
+          slogan: "<p><i>JJaksdkl</i></p>",
+        },
+      ];
+
+      function func(arr) {
+        for (const objs of arr) {
+          objs.items = [];
+          const id = objs.id;
+
+          for (const objs2 of arr) {
+            if (id === objs2.parentId) {
+              objs.items.push(objs2);
+            }
+          }
+        }
+      }
+      func(foo);
+
+      // Գրել ֆունկցիա, որը կստանա օբյեկտ և string, և կվերադարձնի նոր օբյեկտ, առանց այդ երկրորդ արգումենտով արժեքի
+      function thirdFunction(obj, str) {
+        for (let key in obj) {
+          if (key === str) {
+            delete obj[key];
+          }
+        }
+        return obj;
+      }
+      console.log(thirdFunction({ a: 1, b: 2 }, "a"));
+
+
+      // Գրել ֆունկցիա, որը կստանա string և դրա սիմվոլները կդասավորի հետևյալ հերթականությամբ՝ ձայնավորներ, բաղաձայններ, այլ սիմվոլներ
+      function vowelsSort(str) {
+        let str2 = str;
+
+        let consonantsSearch = /[b-df-hj-np-tv-z]/g;
+        let vowelsSearch = /[aeiou]/g;
+        let symblosSearch = /\W/g;
+
+        let constants = str2.match(consonantsSearch);
+        let vowels = str2.match(vowelsSearch);
+        let symbols = str2.match(symblosSearch);
+
+        let x = Object.values(vowels).join("");
+        let y = Object.values(constants).join("");
+        let z = Object.values(symbols).join("");
+        return x + y + z;
+      }
+
+      console.log(vowelsSort("erefa!##"));
+
+      // tarberak 2
+      const vowels = ["a", "e", "i", "o", "u"];
+      const consonants = ["b","c","d","f","g","h","j","k","l","m","...",];
+
+      function vowelsSort2(str) {
+        const list = str.split("");
+
+        const result = ["", "", ""];
+        for (let letter of list) {
+          if (vowels.indexOf(letter) !== -1) {
+            result[0] += letter;
+          } else if (consonants.indexOf(letter) !== -1) {
+            result[1] += letter;
+          } else {
+            result[2] += letter;
+          }
+        }
+        return result.join("");
+      }
+
+      alert(vowelsSort2("erefa!##"));
+    </script>
+  </body>
+</html>

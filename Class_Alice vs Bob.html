@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      class Player {
+        constructor(name, hp, en, armor) {
+          this._hp = hp;
+          this._maxHp = 100;
+          this._en = en;
+          this._maxEn = 100;
+
+          this.name = name;
+          this.armor = armor;
+        }
+
+        get hp() {
+          return this._hp;
+        }
+        set hp(hp_) {
+          if (hp_ <= this._maxHp) {
+            this._hp = hp_;
+          } else {
+            //console.log(this.name  + " says : My HP is full ! Thanks ) ")
+          }
+        }
+        get en() {
+          return this._en;
+        }
+        set en(en) {
+          if (en >= 0 && en <= this._maxEn) {
+            this._en = en;
+          } else {
+            alert("Invalid Energy !!");
+          }
+        }
+        hpPerc(num) {}
+        learnSkill(skillName, skillObj) {
+          const skill = skillObj;
+
+          this[skillName] = function (enemy) {
+            this.damage = skill.damage;
+            this.penetration = skill.penetration;
+            this.heal = skill.heal;
+            this.cost = skill.cost;
+            this.desc = skill.desc;
+
+            if (this.en > this.damage) {
+              enemy.armor = enemy.armor - this.penetration;
+              if (enemy.armor <= 0 && this.cost > enemy.armor) {
+                enemy.hp = enemy.hp - (enemy.armor * -1 + this.damage);
+              }
+              if (this.hp > 0) {
+                enemy.hp = enemy.hp - this.damage;
+              } else {
+                return this.descript;
+              }
+
+              this.hp = this.hp + this.heal;
+
+              let diedOrNot = "";
+              if (enemy.hp <= 0) {
+                diedOrNot = "died";
+              } else {
+                // Hp in %
+                let enHp = 100 - 100 / (enemy.hp / this.damage);
+                diedOrNot = enHp.toFixed(2) + "% health.";
+              }
+
+              this.descript = ` ${this.name} used ${skillName}, ${this.desc}, against ${enemy.name}, 
+								doing ${this.damage} damage! ${this.name} healed for ${this.heal} health! ${enemy.name} is at ${diedOrNot}`;
+
+              // dont have Energy
+              if (this.cost > this.en) {
+                return `${this.name} attempted to use ${skillName}, but didn't have enough energy!`;
+              }
+
+              return this.descript;
+            } else {
+              return `${this.name} attempted to use ${skillName}, but didn't have enough energy!`;
+            }
+          };
+        }
+      }
+
+      const alice = new Player("Alice", 100, 50, 10);
+      const bob = new Player("Bob", 100, 50, 10);
+
+      alice.learnSkill("fireball", {
+        damage: 10,
+        penetration: 5,
+        heal: 5,
+        cost: 15,
+        desc: "a firey magical attack",
+      });
+
+      console.log(alice.fireball(bob));
+
+      bob.learnSkill("superbeam", {
+        damage: 10,
+        penetration: 5,
+        heal: 5,
+        cost: 15,
+        desc: "an overpowered attack, pls nerf",
+      });
+
+      console.log(bob.superbeam(alice));
+
+      console.log(alice);
+      console.log(bob);
+    </script>
+  </body>
+</html>

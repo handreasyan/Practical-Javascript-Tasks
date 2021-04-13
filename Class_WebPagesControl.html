@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      const alphabetArray = "abcdefghijklmnopqrstuvwxyz".split("");
+
+      class Pagination {
+        constructor(array, itemsOnPage) {
+          this.items = array.filter((item) => item);
+          this.pageSize = Math.round(itemsOnPage);
+          this.totalPages = Math.ceil(array.length / itemsOnPage);
+          this.currentPage = 5;
+          this.itemsOnPages = [];
+        }
+
+        prevPage() {
+          if (this.currentPage !== 1) {
+            this.currentPage--;
+          } else {
+            console.log("We are on the first page");
+          }
+          return this;
+        }
+
+        nextPage() {
+          if (this.currentPage !== this.totalPages) {
+            this.currentPage++;
+          } else {
+            console.log("We are on the last page");
+          }
+          return this;
+        }
+
+        firstPage() {
+          this.currentPage = 1;
+          return this;
+        }
+
+        lastPage() {
+          this.currentPage = this.totalPages;
+          return this;
+        }
+
+        goToPage(pageNumber) {
+          if (
+            parseInt(pageNumber) > this.totalPages ||
+            parseInt(pageNumber) < 1 ||
+            isNaN(parseInt(pageNumber))
+          ) {
+            console.log("Page not exist");
+          } else {
+            this.currentPage = pageNumber;
+          }
+          return this;
+        }
+
+        getVisibleItems() {
+          let itemsOnCurrentPage = [];
+          if (this.itemsOnPages[this.currentPage]) {
+            itemsOnCurrentPage = this.itemsOnPages[this.currentPage];
+          } else {
+            const firstItemIndexOnCurrentPage =
+              (this.currentPage - 1) * this.pageSize;
+            for (
+              let i = firstItemIndexOnCurrentPage;
+              i < firstItemIndexOnCurrentPage + this.pageSize;
+              i++
+            ) {
+              if (this.items[i]) {
+                itemsOnCurrentPage.push(this.items[i]);
+              }
+            }
+            this.itemsOnPages[this.currentPage] = itemsOnCurrentPage;
+          }
+          return itemsOnCurrentPage;
+        }
+      }
+
+      const pages = new Pagination(alphabetArray, 4);
+
+      console.log(pages.getVisibleItems());
+    </script>
+  </body>
+</html>

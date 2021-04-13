@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script>
+      function someFunc(str) {
+        function callB(p) {
+          let oppositeIndex;
+          let parentheses = [
+            ["(", ")"],
+            ["{", "}"],
+            ["[", "]"],
+          ];
+          parentheses.forEach(function (item, i) {
+            if (item.includes(p)) {
+              let ind = item.indexOf(p) === 0 ? 1 : 0;
+              oppositeIndex = item[ind];
+            }
+          });
+          return oppositeIndex;
+        }
+
+        let arr = str.split("");
+        if (arr.length % 2 === 0) {
+          arr.forEach((item, i) => {
+            let opposite = callB(item);
+            if (arr.includes(opposite)) {
+              arr[i] = undefined;
+              let x = arr.indexOf(opposite);
+              arr[x] = undefined;
+            }
+          });
+          return arr.join("").length === 0 ? "Valid" : "Invalid";
+        } else {
+          return "Invalid";
+        }
+      }
+      console.log(someFunc("{}()}([]([{)])"));
+    </script>
+  </body>
+</html>

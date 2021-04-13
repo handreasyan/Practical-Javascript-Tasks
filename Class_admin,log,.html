@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      class BaseUserInterface {
+        constructor(email, password) {
+          this.email = email;
+          this._password = password;
+        }
+        set lastLogin(newLogin) {
+          this._lastLoginLocation = newLogin;
+          this._lastLoginDate = new Date();
+        }
+        get lastLogin() {
+          return (
+            "Last login was in " +
+            this._lastLoginLocation +
+            " at " +
+            this._lastLoginDate
+          );
+        }
+        login(email, password, location = "Yeravan") {
+          if (email === this.email && password === this._password) {
+            this.lastLogin = location;
+            console.log("You are logged in");
+          } else {
+            throw "Email or password is wrong";
+          }
+        }
+      }
+
+      class User extends BaseUserInterface {
+        constructor(fName, lName, email, password) {
+          super(email, password);
+          this.firstName = fName;
+          this.lasName = lName;
+        }
+        login(email, password, location) {
+          if (!location) {
+            throw "Location is Required";
+          } else {
+            super.login(email, password);
+          }
+        }
+      }
+
+      class Admin extends BaseUserInterface {
+        constructor(email, password, key) {
+          super(email, password);
+          this._key = key;
+        }
+        login(email, password, key) {
+          if (key === this._key) {
+            super.login(email, password);
+          } else {
+            throw "Wrong password";
+          }
+        }
+      }
+
+      let admin1 = new Admin("randomkey", "mail@ru", "parol");
+      admin1.login("randomkey", "mail@ru", "parol");
+
+      console.log(admin1.lastLogin);
+    </script>
+  </body>
+</html>

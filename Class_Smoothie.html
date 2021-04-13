@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const prices = {
+        Strawberries: "$1.50",
+        Banana: "$0.50",
+        Mango: "$2.50",
+        Blueberries: "$1.00",
+        Raspberries: "$1.00",
+        Apple: "$1.75",
+        Pineapple: "$3.50",
+      };
+
+      class Smoothie {
+        constructor(ingredient) {
+          this.ingredients = ingredient;
+        }
+        getCost() {
+          let cost = 0;
+          for (let fruit of this.ingredients) {
+            cost += +prices[fruit].substring(1, prices[fruit].length);
+          }
+          return "$" + cost.toFixed(2);
+        }
+        getPrice() {
+          return (
+            "$" +
+            (
+              +this.getCost().substring(1, this.getCost().length) +
+              +this.getCost().substring(1, this.getCost().length) * 1.5
+            ).toFixed(2)
+          );
+        }
+        getName() {
+          let xName = this.ingredients.length > 1 ? " Fusion" : " Smoothie";
+          return (
+            this.ingredients
+              .sort()
+              .join(" ")
+              .replace(/berries/g, "berry") + xName
+          );
+        }
+      }
+
+      s1 = new Smoothie(["Banana"]);
+
+      console.log(s1.ingredients); //➞ ["Banana"]
+
+      console.log(s1.getCost()); // ➞ "$0.50"
+
+      console.log(s1.getPrice()); // ➞ "$1.25"
+
+      console.log(s1.getName()); // ➞ "Banana Smoothie"
+
+      s2 = new Smoothie(["Raspberries", "Strawberries", "Blueberries"]);
+
+      console.log(s2.ingredients); // ➞ ["Raspberries", "Strawberries", "Blueberries"]
+
+      console.log(s2.getCost()); //➞ "$3.50"
+
+      console.log(s2.getPrice()); // ➞ "$8.75"
+
+      console.log(s2.getName()); //➞ "Blueberry Raspberry Strawberry Fusion"*/
+    </script>
+  </body>
+</html>

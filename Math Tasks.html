@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <script>
+      // Math.pow()==========================
+
+      function pow(num1, num2) {
+        let res = num1;
+        while (num2 > 1) {
+          res *= num1;
+          num2--;
+        }
+        return res;
+      }
+      console.log(pow(5, 4));
+
+      // Math.max()	===================================
+
+      // for loop
+      function max1(arr) {
+        let maxVal = arr[0];
+        for (let i = 1; i < arr.length; i++) {
+          if (maxVal < arr[i]) {
+            maxVal = arr[i];
+          }
+        }
+        return maxVal;
+      }
+
+      console.log(max1([5, 28, 99, 23, 100, 32]));
+
+      //  forEach
+      function max2(arr) {
+        let maxVal = arr[0];
+        arr.forEach(function (element, index) {
+          if (maxVal < element) {
+            maxVal = element;
+          }
+        });
+        return maxVal;
+      }
+      console.log(max2([5, 28, 99, 23, 100, 32]));
+
+      // reduce
+      function max3(arr) {
+        return arr.reduce(function (aggr, val) {
+          if (aggr < val) {
+            return val;
+          }
+          return aggr;
+        });
+      }
+      console.log(max3([5, 28, 99, 23, 100, 32]));
+
+      //  Векторный тип.	=================================================================================================
+
+      class Vector {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+        }
+        plus(vector) {
+          return new Vector(this.x + vector.x, this.y + vector.y);
+        }
+        minus(vector) {
+          return new Vector(this.x - vector.x, this.y - vector.y);
+        }
+        get length() {
+          return Math.sqrt(this.x * this.x + this.y * this.y);
+        }
+      }
+
+      console.log(new Vector(1, 2).plus(new Vector(2, 3))); // → Vector{x: 3, y: 5}
+      console.log(new Vector(1, 2).minus(new Vector(2, 3))); // → Vector{x: -1, y: -1}
+      console.log(new Vector(3, 4).length); // → 5
+
+      // Снова числа  =======================================================================================
+
+      let number = /^[+\-]?(\d+(\.\d*)?|\.\d+)([eE][+\-]?\d+)?$/;
+
+      for (let str of [
+        "1",
+        "-1",
+        "+15",
+        "1.55",
+        ".5",
+        "5.",
+        "1.3e2",
+        "1E-4",
+        "1e+12",
+      ]) {
+        if (!number.test(str)) {
+          console.log(`Failed to match '${str}'`);
+        }
+      }
+      for (let str of [
+        "1a",
+        "+-1",
+        "1.2.3",
+        "1+1",
+        "1e4.5",
+        ".5.",
+        "1f5",
+        ".",
+      ]) {
+        if (number.test(str)) {
+          console.log(`Incorrectly accepted '${str}'`);
+        }
+      }
+
+      // Գրեք average անունով ֆունկցիա, որը կվերցնի թվերի զանգված, և կվերադարձնի այդ թվերի հանրահաշվական միջինը։
+
+      let average = function (sum) {
+        let i = 0;
+        let res = 0;
+        while (i < sum.length) {
+          res = res + sum[i];
+          i = i + 1;
+        }
+        return res / sum.length;
+      };
+      let arr = [9, 6, 96, 6, 9, 69];
+      alert("հանրահաշվական միջինը = " + average(arr));
+
+
+      // factorial ===============================
+
+      let factorial = function (x) {
+        let result = 1;
+        while (x >= 1) {
+          result = result * x;
+          x = x - 1;
+        }
+        return result;
+      };
+      alert("թվի ֆակտորիալը = " + factorial(8));
+
+      // fibonachiLoop used for loop  	============================================================================================
+      function fibonachiLoop(n) {
+        let arr1 = [0, 1];
+
+        let i = 1;
+        while (!(arr1[i] + arr1[i - 1] >= n)) {
+          arr1.push(arr1[i] + arr1[i - 1]);
+          i++;
+        }
+        console.log(
+          "fibonachiLoop function result ==> " + arr1[arr1.length - 1]
+        );
+      }
+
+      fibonachiLoop(13);
+
+      //2. fibonachiLoop used  recursion   ============================================================================================
+      let arr1 = [0, 1];
+      function fibonachiRecursion(n) {
+        if (n < arr1[arr1.length - 1]) {
+          return;
+        }
+        arr1.push(arr1[arr1.length - 2] + arr1[arr1.length - 1]);
+        fibonachiRecursion(n - 1);
+      }
+
+      fibonachiRecursion(13);
+      console.log(
+        "fibonachiRecursion function result ==> " + arr1[arr1.length - 2]
+      );
+    </script>
+  </body>
+</html>

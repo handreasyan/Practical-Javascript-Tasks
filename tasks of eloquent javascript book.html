@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td,
+      th {
+        border: 1px solid black;
+        padding: 3px 8px;
+      }
+      th {
+        text-align: left;
+      }
+    </style>
+    <script>
+      //7. Мы можем присвоить значение каждому символу в слове в зависимости от их позиции в алфавите (a = 1, b = 2, ..., z = 26). Сбалансированное слово является одним , где сумма значений на левой сторону этого слова равна сумма значений на правой стороне. Для слов нечетной длины средний символ (точка баланса) игнорируется.Напишите функцию, которая возвращает, true если слово сбалансировано, а false если нет.
+
+      function balanced(str) {
+        let firstStr = str.slice(0, str.length / 2);
+        let lastStr = str.slice(Math.ceil(str.length / 2), str.length);
+
+        let x = firstStr.split("").reduce(function (aggr, val, ind) {
+          return aggr + firstStr.charCodeAt(ind);
+        }, 0);
+        let y = lastStr.split("").reduce(function (aggr, val, ind) {
+          return aggr + lastStr.charCodeAt(ind);
+        }, 0);
+
+        if (x === y) {
+          console.log(true);
+        } else {
+          console.log(false);
+        }
+      }
+
+      balanced("brake");
+
+      //.  Строим таблицу  =======================================================================================
+
+      function buildTable(data) {
+        function create(domElement, parent, inText) {
+          const element = document.createElement(domElement);
+          if (parent) parent.appendChild(element);
+          if (inText) element.innerText = inText;
+          if (typeof inText === "number")
+            element.style = " text-align:right; color:red; ";
+          return element;
+        }
+        const table = create("table", false, false);
+        let args = Object.keys(data[0]);
+        let whatIDoCreate = "th";
+        for (let obj of data) {
+          let trClassName = 1;
+          const tr = create("tr", table, false);
+          for (let val of args) {
+            const td = create(whatIDoCreate, tr, val);
+            whatIDoCreate = "td";
+            args = Object.values(obj);
+          }
+        }
+        return table;
+      }
+
+      const MOUNTAINS = [
+        { name: "Kilimanjaro", height: 5895, place: "Tanzania" },
+        { name: "Everest", height: 8848, place: "Nepal" },
+        { name: "Mount Fuji", height: 3776, place: "Japan" },
+        { name: "Vaalserberg", height: 323, place: "Netherlands" },
+        { name: "Denali", height: 6168, place: "United States" },
+        { name: "Popocatepetl", height: 5465, place: "Mexico" },
+        { name: "Mont Blanc", height: 4808, place: "Italy/France" },
+      ];
+      document.body.appendChild(buildTable(MOUNTAINS));
+
+      //  	Запертая коробка	=======================================================================================
+      const box = {
+        locked: true,
+        unlock: function () {
+          this.locked = false;
+        },
+        lock: function () {
+          this.locked = true;
+        },
+        _content: [],
+        get content() {
+          if (this.locked) throw new Error("Заперто!");
+          return this._content;
+        },
+      };
+
+      function withBoxUnlocked(body) {
+        box.unlock();
+        try {
+          body();
+        } catch (e) {}
+        box.lock();
+      }
+
+      withBoxUnlocked(() => {
+        box.content.push("золотишко");
+      });
+
+      try {
+        withBoxUnlocked(function () {
+          throw new Error("Пираты на горизонте! Отмена!");
+        });
+      } catch (e) {
+        console.log("Произошла ошибка:", e);
+      }
+      console.log(box.locked);
+
+      // Напишите функции	==================================================================================================
+      // arrayToList
+      function arrayToList(arr) {
+        if (arr.length <= 0) {
+          return null;
+        }
+        return { value: arr.shift(), rest: arrayToList(arr) };
+      }
+      console.log(arrayToList([1, 2, 3, 4, 5, 6, 7]));
+
+      // listToArray
+      function listToArray(listt) {
+        let arr = [];
+        function loop(list) {
+          if (list.value) {
+            arr.push(list.value);
+            delete list.value;
+          }
+          if (list.rest === null) {
+            return;
+          }
+          loop(list.rest);
+          return arr;
+        }
+        return loop(listt);
+      }
+      console.log(listToArray(arrayToList([1, 2, 3, 4, 5, 6, 7])));
+
+      // prepend
+      function prepend(arg1, arg2) {
+        return { value: arg1, rest: arg2 };
+      }
+      console.log(prepend(10, prepend(20, null)));
+
+      // nth
+      function nth(list2, num) {
+        return listToArray(list2)[num];
+      }
+      console.log(nth(arrayToList([1, 2, 3, 4, 5, 6, 7]), 4));
+
+      //  Считаем бобы.		==================================================================================================
+
+      function countBs(str, s) {
+        let x = 0;
+        for (let i = 0; i < str.length; i++) {
+          if (str[i] === s) {
+            x++;
+          }
+        }
+        return x;
+      }
+
+      console.log(countBs("BoB", "B"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      // 3. FizzBizz        ========================================================================================================
+      // 2 if used
+      const foobaz = (num) => {
+        let result = "";
+
+        if (num % 3 === 0) {
+          result += "foo";
+        }
+        if (num % 5 === 0) {
+          result += "bar";
+        }
+
+        return result || num;
+      };
+
+      alert(foobaz(15));
+
+      //  1 if used
+      const foobaz2 = (num) => {
+        let result = "";
+        let o = "foo";
+        for (let i = 3; i <= 5; i++) {
+          if (num % i === 0) {
+            result += o;
+          }
+          o = "bar";
+        }
+
+        return result || num;
+      };
+
+      alert(foobaz2(11));
+  </script>
+</body>
+</html>
