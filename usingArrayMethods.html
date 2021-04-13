@@ -105,24 +105,7 @@
       }
       console.log(toNumber("11110100000011110010"));
 
-      // 8. Обращаем массив вспять.	==================================================================================================
-
-      function reverseArray(arr) {
-        let arr2 = [];
-        arr.forEach((el) => arr2.unshift(el));
-        return arr2;
-      }
-      function reverseArrayInPlace(arr) {
-        let x;
-        for (let i = 1; i < arr.length / 2 + 1; i++) {
-          x = arr[i - 1];
-          arr[i - 1] = arr[arr.length - i];
-          arr[arr.length - i] = x;
-        }
-        return arr;
-      }
-      console.log(reverseArray([1, 2, 3, 4, 5]));
-      console.log(reverseArrayInPlace([6, 7, 8, 9, 10]));
+      
     </script>
   </body>
 </html>
