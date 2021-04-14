@@ -90,20 +90,7 @@
       }
       console.log(removeAtIndex([5, 10, 15, 20], 2));
 
-      /*		4: Գրեք ֆունկցիա toNumber անունով, որն ընդունում է բինարյան string և վերադաձնում տվային արժեք, որն համարժեք է հաշվարկման երկուական համակարգի թվերին։	*/
-      function toNumber(num) {
-        let x = 0;
-        num
-          .split("")
-          .reverse()
-          .forEach(function (element, index) {
-            if (element !== "0") {
-              x += Math.pow(2, index);
-            }
-          });
-        return x;
-      }
-      console.log(toNumber("11110100000011110010"));
+     
 
       
     </script>
