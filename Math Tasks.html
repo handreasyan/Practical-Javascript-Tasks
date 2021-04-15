@@ -6,184 +6,256 @@
   </head>
   <body>
     <script>
+      
+      // Rectangle ===========================
+        class Rectangle {
+        constructor(sideA, sideB) {
+          this.sideA = sideA
+          this.sideB = sideB
+        }
+
+        getArea(){	// makeres
+            return this.sideA*this.sideB
+        }
+        getPerimeter(){	// tramagic
+          return (this.sideA + this.sideB) *2
+        }
+      }
+      const rect = new Rectangle(5,10);
+	  	alert(rect.getArea());
+		  alert(rect.getPerimeter());
+      
+      // circle =============================
+          class Circle {
+          constructor(radius){
+            this.radius = radius;
+          }
+          getArea(){		// shrjanagci makeres
+            return Math.PI * Math.pow(this.per,2); 
+          }
+          getPerimeter(){		// shrjanagci tramagic
+            return 2 * Math.PI * this.per;
+          }
+        }
+        const circy = new Circle(11);	
+        console.log(circy.getArea());
+
+        const circy2 = new Circle(4.4);	
+        console.log(circy2.getPerimeter());
+      
+      
+      // Triangle   ============================================
+          class Triangle extends Polygon {
+          constructor(a, b, c) {
+              super();
+                const ab = Math.sqrt( (a[0] - b[0])**2 + (a[1] - b[1])**2 );
+              const bc = Math.sqrt( (b[0] - c[0])**2 + (b[1] - c[1])**2 );
+              const ac = Math.sqrt( (a[0] - c[0])**2 + (a[1] - c[1])**2 );
+                if(ab + bc > ac && ac + bc > ab && ab + ac > bc) {
+                    this.a = a;
+                    this.b = b;
+                    this.c = c;
+                } else {
+                  throw 'Wrong arguments!';
+                }
+            }
+            area() {	
+              const s = this.perimeter() / 2;
+                return Math.sqrt( s * (s-this.a) * (s-this.b) * (s-this.c) );
+            }
+            perimeter() {	
+              const ab = Math.sqrt( (this.a[0] - this.b[0])**2 + (this.a[1] - this.b[1])**2 );
+              const bc = Math.sqrt( (this.b[0] - this.c[0])**2 + (this.b[1] - this.c[1])**2 );
+              const ac = Math.sqrt( (this.a[0] - this.c[0])**2 + (this.a[1] - this.c[1])**2 );
+                return ab + bc + ac;
+            }
+        }
+        const t1 = new Triangle([1, 2], [3, 3], [4, 4]);
+        class IsoscelesTriangle extends Triangle {
+          constructor(a, b, c) {
+              super();
+            }
+        }
+        alert(t1.perimeter());
+      
       // Math.pow()==========================
 
-      function pow(num1, num2) {
-        let res = num1;
-        while (num2 > 1) {
-          res *= num1;
-          num2--;
+        function pow(num1, num2) {
+          let res = num1;
+          while (num2 > 1) {
+            res *= num1;
+            num2--;
+          }
+          return res;
         }
-        return res;
-      }
-      console.log(pow(5, 4));
+        console.log(pow(5, 4));
 
       // Math.max()	===================================
 
-      // for loop
-      function max1(arr) {
-        let maxVal = arr[0];
-        for (let i = 1; i < arr.length; i++) {
-          if (maxVal < arr[i]) {
-            maxVal = arr[i];
+          // for loop
+          function max1(arr) {
+            let maxVal = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+              if (maxVal < arr[i]) {
+                maxVal = arr[i];
+              }
+            }
+            return maxVal;
           }
-        }
-        return maxVal;
-      }
 
-      console.log(max1([5, 28, 99, 23, 100, 32]));
+          console.log(max1([5, 28, 99, 23, 100, 32]));
 
-      //  forEach
-      function max2(arr) {
-        let maxVal = arr[0];
-        arr.forEach(function (element, index) {
-          if (maxVal < element) {
-            maxVal = element;
+          //  forEach
+          function max2(arr) {
+            let maxVal = arr[0];
+            arr.forEach(function (element, index) {
+              if (maxVal < element) {
+                maxVal = element;
+              }
+            });
+            return maxVal;
           }
-        });
-        return maxVal;
-      }
-      console.log(max2([5, 28, 99, 23, 100, 32]));
+          console.log(max2([5, 28, 99, 23, 100, 32]));
 
-      // reduce
-      function max3(arr) {
-        return arr.reduce(function (aggr, val) {
-          if (aggr < val) {
-            return val;
+          // reduce
+          function max3(arr) {
+            return arr.reduce(function (aggr, val) {
+              if (aggr < val) {
+                return val;
+              }
+              return aggr;
+            });
           }
-          return aggr;
-        });
-      }
-      console.log(max3([5, 28, 99, 23, 100, 32]));
+          console.log(max3([5, 28, 99, 23, 100, 32]));
 
       //  Векторный тип.	=================================================================================================
 
-      class Vector {
-        constructor(x, y) {
-          this.x = x;
-          this.y = y;
-        }
-        plus(vector) {
-          return new Vector(this.x + vector.x, this.y + vector.y);
-        }
-        minus(vector) {
-          return new Vector(this.x - vector.x, this.y - vector.y);
-        }
-        get length() {
-          return Math.sqrt(this.x * this.x + this.y * this.y);
-        }
-      }
+          class Vector {
+            constructor(x, y) {
+              this.x = x;
+              this.y = y;
+            }
+            plus(vector) {
+              return new Vector(this.x + vector.x, this.y + vector.y);
+            }
+            minus(vector) {
+              return new Vector(this.x - vector.x, this.y - vector.y);
+            }
+            get length() {
+              return Math.sqrt(this.x * this.x + this.y * this.y);
+            }
+          }
 
-      console.log(new Vector(1, 2).plus(new Vector(2, 3))); // → Vector{x: 3, y: 5}
-      console.log(new Vector(1, 2).minus(new Vector(2, 3))); // → Vector{x: -1, y: -1}
-      console.log(new Vector(3, 4).length); // → 5
+          console.log(new Vector(1, 2).plus(new Vector(2, 3))); // → Vector{x: 3, y: 5}
+          console.log(new Vector(1, 2).minus(new Vector(2, 3))); // → Vector{x: -1, y: -1}
+          console.log(new Vector(3, 4).length); // → 5
 
       // Снова числа  =======================================================================================
 
-      let number = /^[+\-]?(\d+(\.\d*)?|\.\d+)([eE][+\-]?\d+)?$/;
+          let number = /^[+\-]?(\d+(\.\d*)?|\.\d+)([eE][+\-]?\d+)?$/;
 
-      for (let str of [
-        "1",
-        "-1",
-        "+15",
-        "1.55",
-        ".5",
-        "5.",
-        "1.3e2",
-        "1E-4",
-        "1e+12",
-      ]) {
-        if (!number.test(str)) {
-          console.log(`Failed to match '${str}'`);
-        }
-      }
-      for (let str of [
-        "1a",
-        "+-1",
-        "1.2.3",
-        "1+1",
-        "1e4.5",
-        ".5.",
-        "1f5",
-        ".",
-      ]) {
-        if (number.test(str)) {
-          console.log(`Incorrectly accepted '${str}'`);
-        }
-      }
+          for (let str of [
+            "1",
+            "-1",
+            "+15",
+            "1.55",
+            ".5",
+            "5.",
+            "1.3e2",
+            "1E-4",
+            "1e+12",
+          ]) {
+            if (!number.test(str)) {
+              console.log(`Failed to match '${str}'`);
+            }
+          }
+          for (let str of [
+            "1a",
+            "+-1",
+            "1.2.3",
+            "1+1",
+            "1e4.5",
+            ".5.",
+            "1f5",
+            ".",
+          ]) {
+            if (number.test(str)) {
+              console.log(`Incorrectly accepted '${str}'`);
+            }
+          }
 
       // Գրեք average անունով ֆունկցիա, որը կվերցնի թվերի զանգված, և կվերադարձնի այդ թվերի հանրահաշվական միջինը։
 
-      let average = function (sum) {
-        let i = 0;
-        let res = 0;
-        while (i < sum.length) {
-          res = res + sum[i];
-          i = i + 1;
-        }
-        return res / sum.length;
-      };
-      let arr = [9, 6, 96, 6, 9, 69];
-      alert("հանրահաշվական միջինը = " + average(arr));
+          let average = function (sum) {
+            let i = 0;
+            let res = 0;
+            while (i < sum.length) {
+              res = res + sum[i];
+              i = i + 1;
+            }
+            return res / sum.length;
+          };
+          let arr = [9, 6, 96, 6, 9, 69];
+          alert("հանրահաշվական միջինը = " + average(arr));
 
 
       // factorial ===============================
 
-      let factorial = function (x) {
-        let result = 1;
-        while (x >= 1) {
-          result = result * x;
-          x = x - 1;
-        }
-        return result;
-      };
-      alert("թվի ֆակտորիալը = " + factorial(8));
+          let factorial = function (x) {
+            let result = 1;
+            while (x >= 1) {
+              result = result * x;
+              x = x - 1;
+            }
+            return result;
+          };
+          alert("թվի ֆակտորիալը = " + factorial(8));
 
       // fibonachiLoop used for loop  	============================================================================================
-      function fibonachiLoop(n) {
-        let arr1 = [0, 1];
+          function fibonachiLoop(n) {
+            let arr1 = [0, 1];
 
-        let i = 1;
-        while (!(arr1[i] + arr1[i - 1] >= n)) {
-          arr1.push(arr1[i] + arr1[i - 1]);
-          i++;
-        }
-        console.log(
-          "fibonachiLoop function result ==> " + arr1[arr1.length - 1]
-        );
-      }
+            let i = 1;
+            while (!(arr1[i] + arr1[i - 1] >= n)) {
+              arr1.push(arr1[i] + arr1[i - 1]);
+              i++;
+            }
+            console.log(
+              "fibonachiLoop function result ==> " + arr1[arr1.length - 1]
+            );
+          }
 
-      fibonachiLoop(13);
+          fibonachiLoop(13);
 
       //. fibonachiLoop used  recursion   ============================================================================================
-      let arr1 = [0, 1];
-      function fibonachiRecursion(n) {
-        if (n < arr1[arr1.length - 1]) {
-          return;
-        }
-        arr1.push(arr1[arr1.length - 2] + arr1[arr1.length - 1]);
-        fibonachiRecursion(n - 1);
-      }
+          let arr1 = [0, 1];
+          function fibonachiRecursion(n) {
+            if (n < arr1[arr1.length - 1]) {
+              return;
+            }
+            arr1.push(arr1[arr1.length - 2] + arr1[arr1.length - 1]);
+            fibonachiRecursion(n - 1);
+          }
 
-      fibonachiRecursion(13);
-      console.log(
-        "fibonachiRecursion function result ==> " + arr1[arr1.length - 2]
-      );
+          fibonachiRecursion(13);
+          console.log(
+            "fibonachiRecursion function result ==> " + arr1[arr1.length - 2]
+          );
       
        /*	: Գրեք ֆունկցիա toNumber անունով, որն ընդունում է բինարյան string և վերադաձնում տվային արժեք, որն համարժեք է հաշվարկման երկուական համակարգի թվերին։	*/
-      function toNumber(num) {
-        let x = 0;
-        num
-          .split("")
-          .reverse()
-          .forEach(function (element, index) {
-            if (element !== "0") {
-              x += Math.pow(2, index);
-            }
-          });
-        return x;
-      }
-      console.log(toNumber("11110100000011110010"));
+          function toNumber(num) {
+            let x = 0;
+            num
+              .split("")
+              .reverse()
+              .forEach(function (element, index) {
+                if (element !== "0") {
+                  x += Math.pow(2, index);
+                }
+              });
+            return x;
+          }
+          console.log(toNumber("11110100000011110010"));
     </script>
   </body>
 </html>
